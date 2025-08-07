@@ -1,6 +1,6 @@
 {
   "name": "@cafe-gamedev/gemini",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Instalador e wrapper para o Gemini, configurado com o contexto do ecossistema 'Café com Godot'.",
   "main": "main.js",
   "bin": {
