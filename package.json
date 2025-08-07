@@ -1,0 +1,21 @@
+{
+  "name": "cafe-gemini",
+  "version": "0.1.0",
+  "description": "Um CLI wrapper para o Gemini, configurado para o ambiente de desenvolvimento do 'Café com Godot'.",
+  "main": "main.js",
+  "bin": {
+    "cafe-gemini": "./main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/Cafe-com-Godot.git"
+  },
+  "keywords": [
+    "gemini",
+    "godot",
+    "cli",
+    "cafe-com-godot"
+  ],
+  "author": "Cafe-GameDev",
+  "license": "Apache-2.0"
+}
