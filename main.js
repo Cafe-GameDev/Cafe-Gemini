@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { spawn } = require('child_process');
+const { execSync } = require('child_process');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
@@ -18,36 +18,26 @@ function main() {
         process.exit(1);
     }
 
-    // Pega todos os argumentos passados para o 'cafe-gemini'
-    const userArgs = process.argv.slice(2);
+    // Pega todos os argumentos passados para o 'cafe-gemini' e os junta em uma string
+    const userArgs = process.argv.slice(2).join(' ');
 
-    // Monta a lista de argumentos final para o comando 'gemini'
-    const finalArgs = [
-        '--include-directories',
-        contextDir,
-        '--load-memory-from-include-directories',
-        ...userArgs
-    ];
+    // Monta o comando final como uma única string para ser executada pelo shell.
+    // As aspas em "${contextDir}" garantem que o caminho funcione mesmo com espaços.
+    const command = `gemini --include-directories "${contextDir}" --load-memory-from-include-directories ${userArgs}`;
 
     console.log(`☕ Executando Gemini com o contexto de "${contextDir}"...`);
     console.log('----------------------------------------------------------------');
 
-    // Executa o comando 'gemini' real com os argumentos injetados.
-    const geminiProcess = spawn('gemini', finalArgs, {
-        stdio: 'inherit', // Redireciona input/output para o terminal atual
-        shell: true       // Necessário no Windows para encontrar o .cmd do gemini
-    });
-
-    geminiProcess.on('close', (code) => {
-        process.exit(code);
-    });
-
-    geminiProcess.on('error', (err) => {
-        console.error('ERRO: Falha ao iniciar o processo do Gemini.');
-        console.error('Verifique se o @google/gemini-cli está instalado e acessível no seu PATH.');
-        console.error(err);
+    try {
+        // Executa o comando de forma síncrona, herdando o input/output.
+        // Isso é seguro e não gera o DeprecationWarning.
+        execSync(command, { stdio: 'inherit' });
+    } catch (error) {
+        // Se o gemini retornar um código de erro, o execSync vai lançar uma exceção.
+        // O erro do processo filho já foi exibido no console por causa do 'stdio: inherit'.
+        // Apenas garantimos que o nosso script também saia com um código de erro.
         process.exit(1);
-    });
+    }
 }
 
 main();
