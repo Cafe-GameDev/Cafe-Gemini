@@ -14,11 +14,11 @@ function main() {
         console.error('ERRO: Diretório de contexto não encontrado!');
         console.error(`O diretório esperado em "${contextDir}" não existe.`);
         console.error('Por favor, tente reinstalar o pacote para que o download seja feito corretamente:');
-        console.error('npm install -g @cafe-gamedev/gemini-v2');
+        console.error('npm install -g @cafe-gamedev/gemini');
         process.exit(1);
     }
 
-    // Pega todos os argumentos passados para o 'cafe-gemini-v2'
+    // Pega todos os argumentos passados para o 'cafe-gemini'
     const userArgs = process.argv.slice(2);
 
     // Monta a lista de argumentos final para o comando 'gemini'
