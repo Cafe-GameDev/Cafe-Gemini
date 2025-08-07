@@ -1,56 +1,83 @@
-const { execSync } = require('child_process');
+const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const https = require('https');
+const AdmZip = require('adm-zip');
 
 const installDir = path.join(os.homedir(), '.cafe-gemini');
-const repoUrl = 'https://github.com/Cafe-GameDev/Cafe-com-Godot.git';
+const repoUrl = 'https://github.com/Cafe-GameDev/Cafe-com-Godot/archive/refs/heads/main.zip';
+const zipPath = path.join(installDir, 'context.zip');
 
-// Padrões para o sparse-checkout. Inclui tudo, exceto as pastas especificadas.
-const sparseCheckoutPatterns = `/*
-!/assets/
-!/TOOLING/installers/
-`;
+function download(url, dest) {
+    return new Promise((resolve, reject) => {
+        const file = fs.createWriteStream(dest);
+        https.get(url, (response) => {
+            // Lidar com redirecionamentos
+            if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+                return download(response.headers.location, dest).then(resolve).catch(reject);
+            }
+            if (response.statusCode !== 200) {
+                return reject(new Error(`Falha ao baixar o arquivo: Status Code ${response.statusCode}`));
+            }
+            response.pipe(file);
+            file.on('finish', () => {
+                file.close(resolve);
+            });
+        }).on('error', (err) => {
+            fs.unlink(dest, () => reject(err));
+        });
+    });
+}
 
-function run() {
+async function run() {
     console.log(`----------------------------------------------------------------`);
     console.log(`☕ Iniciando configuração do Cafe-Gemini...`);
     console.log(`----------------------------------------------------------------`);
 
-    // 1. Verificar se o Git está instalado
-    try {
-        execSync('git --version', { stdio: 'ignore' });
-    } catch (e) {
-        console.error('ERRO: Git não está instalado. O Git é necessário para baixar os manuais e exemplos.');
-        console.error('Por favor, instale o Git (https://git-scm.com/) e tente novamente.');
-        process.exit(1);
-    }
-
-    // 2. Limpar diretório antigo, se existir, e criar um novo
+    // 1. Limpar diretório antigo, se existir, e criar um novo
     console.log(`-> Preparando o diretório de conteúdo em: ${installDir}`);
     if (fs.existsSync(installDir)) {
         fs.rmSync(installDir, { recursive: true, force: true });
     }
     fs.mkdirSync(installDir);
 
-    // 3. Executar o processo de sparse checkout
+    // 2. Baixar o repositório como .zip
     try {
-        console.log('-> Inicializando repositório para download...');
-        execSync('git init', { cwd: installDir });
-        execSync(`git remote add origin ${repoUrl}`, { cwd: installDir });
+        console.log('-> Baixando conteúdo...');
+        await download(repoUrl, zipPath);
+        console.log('-> Download concluído.');
+    } catch (e) {
+        console.error(`\nERRO: Falha ao baixar o conteúdo do repositório.`, e);
+        process.exit(1);
+    }
 
-        console.log('-> Configurando para baixar apenas os arquivos de texto...');
-        const sparseCheckoutFile = path.join(installDir, '.git', 'info', 'sparse-checkout');
-        fs.writeFileSync(sparseCheckoutFile, sparseCheckoutPatterns);
-        execSync('git config core.sparseCheckout true', { cwd: installDir });
-
-        console.log('-> Baixando conteúdo... (isso pode levar um momento)');
-        execSync('git pull origin main', { cwd: installDir, stdio: 'inherit' });
+    // 3. Descompactar o .zip
+    try {
+        console.log('-> Descompactando conteúdo...');
+        const zip = new AdmZip(zipPath);
+        // A extração cria uma pasta com o nome do repo, ex: 'Cafe-com-Godot-main'
+        zip.extractAllTo(installDir, true);
+        
+        // Mover arquivos da subpasta para a raiz do installDir
+        const extractedFolderName = fs.readdirSync(installDir).find(f => f.startsWith('Cafe-com-Godot-'));
+        if (extractedFolderName) {
+            const extractedPath = path.join(installDir, extractedFolderName);
+            fs.readdirSync(extractedPath).forEach(file => {
+                fs.renameSync(path.join(extractedPath, file), path.join(installDir, file));
+            });
+            fs.rmdirSync(extractedPath);
+        }
+        console.log('-> Conteúdo descompactado e organizado.');
 
     } catch (e) {
-        console.error(`\nERRO: Falha ao baixar o conteúdo do repositório.`);
-        console.error('Verifique sua conexão com a internet e se o repositório está acessível.');
+        console.error(`\nERRO: Falha ao descompactar o conteúdo.`, e);
         process.exit(1);
+    } finally {
+        // 4. Limpar o arquivo .zip
+        if (fs.existsSync(zipPath)) {
+            fs.unlinkSync(zipPath);
+        }
     }
 
     console.log(`----------------------------------------------------------------`);

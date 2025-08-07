@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 
-const { spawn, execSync } = require('child_process');
+const { spawn } = require('child_process');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
 
 // --- Configuração ---
 const contentDir = path.join(os.homedir(), '.cafe-gemini');
-const repoUrl = 'https://github.com/Cafe-GameDev/Cafe-com-Godot.git';
 
 // --- Funções Auxiliares ---
 
@@ -22,7 +21,7 @@ Uso:
 
 Comandos:
   new <NomeDoProjeto>   Cria um novo projeto Godot com a estrutura recomendada.
-  update                Verifica e baixa a versão mais recente dos manuais e exemplos.
+  update                Baixa a versão mais recente dos manuais e exemplos.
   --help, -h            Mostra esta mensagem de ajuda.
 
 Exemplos:
@@ -36,7 +35,7 @@ Para atualizar a ferramenta (o CLI em si), use: npm update -g @cafe-gamedev/gemi
 function ensureContentDirExists() {
     if (!fs.existsSync(contentDir)) {
         console.error('ERRO: Diretório de conteúdo do Cafe-Gemini não encontrado!');
-        console.error('Parece que a instalação não foi concluída.');
+        console.error('Parece que a instalação não foi concluída ou foi corrompida.');
         console.error('Por favor, tente reinstalar o pacote:');
         console.error('npm install -g @cafe-gamedev/gemini');
         process.exit(1);
@@ -49,14 +48,17 @@ function commandUpdate() {
     console.log(`----------------------------------------------------------------`);
     console.log(`☕ Atualizando o conteúdo do Cafe-Gemini...`);
     console.log(`----------------------------------------------------------------`);
-
-    // A lógica de atualização é a mesma da instalação: uma cópia limpa.
-    // Isso evita problemas de merge e garante um estado consistente.
     try {
-        // Requer o postinstall.js para não duplicar código.
-        require('./postinstall');
+        // Executa o script de instalação novamente para baixar a versão mais recente.
+        // Usamos spawn para ter uma saída mais limpa e em tempo real.
+        const child = spawn('node', [path.join(__dirname, 'postinstall.js')], { stdio: 'inherit' });
+        child.on('close', (code) => {
+            if (code !== 0) {
+                console.error(`\nERRO: O processo de atualização falhou.`);
+            }
+        });
     } catch (e) {
-        console.error("\nERRO: Falha ao executar o processo de atualização.", e);
+        console.error("\nERRO: Falha ao iniciar o processo de atualização.", e);
         process.exit(1);
     }
 }
@@ -77,7 +79,7 @@ function commandNewProject(projectName) {
         process.exit(1);
     }
 
-    // Estrutura de pastas, .gitignore, etc.
+    // Estrutura de pastas
     fs.mkdirSync(projectPath);
     ['scenes', 'scripts', 'resources', 'addons'].forEach(dir => {
         fs.mkdirSync(path.join(projectPath, dir), { recursive: true });
@@ -85,10 +87,24 @@ function commandNewProject(projectName) {
     fs.mkdirSync(path.join(projectPath, 'scripts', 'autoloads'), { recursive: true });
     console.log("- Estrutura de pastas criada.");
 
-    const gitignoreContent = `# Godot-specific ignores... (conteúdo omitido para brevidade)`;
+    // .gitignore
+    const gitignoreContent = `# Godot-specific ignores
+.godot/
+!.godot/user_credentials.cfg
+!.godot/user_feature_overrides.cfg
+export_presets.cfg
+.mono/
+data_*/
+# Imports
+.godot/imported/
+# Binaries
+*.exe
+*.dll
+`;
     fs.writeFileSync(path.join(projectPath, '.gitignore'), gitignoreContent);
     console.log("- .gitignore criado.");
 
+    // Global.gd (autoload)
     const globalGdContent = "extends Node\n\n# Adicione suas variaveis e funcoes globais aqui.\n";
     fs.writeFileSync(path.join(projectPath, 'scripts', 'autoloads', 'Global.gd'), globalGdContent);
     console.log("- Autoload 'Global.gd' criado.");
@@ -114,16 +130,29 @@ function commandNewProject(projectName) {
 
     // project.godot
     const projectGodotContent = `
-; Engine configuration file... (conteúdo omitido para brevidade)
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
 config_version=5
+
 [application]
-config/name=\"${projectName}\"
+
+config/name="${projectName}"
 run/main_scene=""
-config/features=PackedStringArray(\"4.2\", \"GL Compatibility\")
+config/features=PackedStringArray("4.2", "GL Compatibility")
+
 [autoload]
-Global=\"*res://scripts/autoloads/Global.gd\"
+
+Global="*res://scripts/autoloads/Global.gd"
+
 [editor_plugins]
-enabled=PackedStringArray(\"res://addons/gut/plugin.cfg\")
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 `;
     fs.writeFileSync(path.join(projectPath, 'project.godot'), projectGodotContent.trim());
     console.log("- project.godot criado e configurado.");
