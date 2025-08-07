@@ -52,3 +52,13 @@ Após a instalação, simplesmente abra um novo terminal e execute:
 ```bash
 cafe-gemini
 ```
+
+## Atualização
+
+Para garantir que você tenha sempre a versão mais recente da ferramenta, com as últimas melhorias e correções, utilize o comando de atualização:
+
+```bash
+cafe-gemini-update
+```
+
+Este comando irá buscar e instalar a versão mais nova do `cafe-gemini` diretamente do repositório.
