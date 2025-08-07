@@ -1,7 +1,7 @@
 {
   "name": "@cafe-gamedev/gemini",
-  "version": "1.0.1",
-  "description": "Instalador e wrapper para o Gemini, configurado com o contexto do ecossistema 'Café com Godot'.",
+  "version": "1.0.2",
+  "description": "Instalador e wrapper para o Gemini, configurado com o contexto do ecossistema 'Repo Café.",
   "main": "main.js",
   "bin": {
     "cafe-gemini": "main.js",
@@ -16,13 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cafe-GameDev/Cafe-com-Godot.git"
+    "url": "git+https://github.com/Cafe-GameDev/Repo-Cafe.git"
   },
   "keywords": [
     "gemini",
     "godot",
-    "cli",
-    "cafe-com-godot"
+    "repo-cafe"
   ],
   "author": "Cafe-GameDev",
   "license": "Apache-2.0",

@@ -2,16 +2,16 @@
 
 Bem-vindo ao Café Gemini, seu assistente de desenvolvimento pessoal para o ecossistema Godot.
 
-Embora tenha nascido do curso "Café com Godot", o Café Gemini evoluiu para uma ferramenta poderosa para **qualquer desenvolvedor Godot**. Ele é mantido e treinado para transformar o Gemini em um copiloto especializado, com acesso direto e total ao seu ambiente de desenvolvimento.
+Embora tenha nascido do curso "Repo Café", o Café Gemini evoluiu para uma ferramenta poderosa para **qualquer desenvolvedor Godot**. Ele é mantido e treinado para transformar o Gemini em um copiloto especializado, com acesso direto e total ao seu ambiente de desenvolvimento.
 
 ## O que é o Café Gemini? O Gemini para Desenvolvedores Godot
 
 O Café Gemini transforma o Gemini em um copiloto que tem acesso direto e total ao seu ambiente de desenvolvimento Godot. Em vez de você precisar copiar e colar código para obter ajuda, o Café Gemini já tem acesso a:
 
--   Todo o seu código-fonte (GDScript, C#, etc.)
--   Todas as suas Cenas (.tscn) e seus nós
--   O seu arquivo de projeto (project.godot)
--   Sinais, Autoloads, Resources e toda a arquitetura do seu jogo.
+- Todo o seu código-fonte (GDScript, C#, etc.)
+- Todas as suas Cenas (.tscn) e seus nós
+- O seu arquivo de projeto (project.godot)
+- Sinais, Autoloads, Resources e toda a arquitetura do seu jogo.
 
 Ele é, em essência, o Gemini para programadores, e o melhor de tudo: **roda diretamente no seu celular via Termux!**
 
@@ -20,20 +20,20 @@ Ele é, em essência, o Gemini para programadores, e o melhor de tudo: **roda di
 O Café Gemini é um wrapper inteligente para o `gemini-cli` do Google. O processo é simples, mas poderoso:
 
 1.  **Instalação do `gemini-cli`**: Garante que a ferramenta base do Google esteja no seu sistema.
-2.  **Clonagem do Conhecimento**: Baixa o repositório [Café com Godot](https://github.com/Cafe-GameDev/Cafe-com-Godot) para uma pasta local (`~/.cafe-gemini/Cafe-com-Godot`). Este repositório é um curso completo de Godot em formato de texto, que serve como o "cérebro" do nosso assistente.
+2.  **Clonagem do Conhecimento**: Baixa o repositório [Repo Café](https://github.com/Cafe-GameDev/Repo-Cafe) para uma pasta local (`~/.cafe-gemini/Repo-Cafe`). Este repositório é um curso completo de Godot em formato de texto, que serve como o "cérebro" do nosso assistente.
 3.  **Configuração do PATH**: Intercepta o comando `gemini` para injetar nosso contexto.
-4.  **Memória Fixa**: Utiliza uma função nativa do Gemini para "fixar" o diretório do Café com Godot na memória. Assim, o assistente **sempre** terá o contexto do curso, não importa em qual pasta do seu sistema você esteja trabalhando.
+4.  **Memória Fixa**: Utiliza uma função nativa do Gemini para "fixar" o diretório do Repo Café na memória. Assim, o assistente **sempre** terá o contexto do curso, não importa em qual pasta do seu sistema você esteja trabalhando.
 
 ### Vantagens desta Abordagem
 
--   **Profissionalismo**: Você instala uma ferramenta real, não apenas executa um script em uma pasta.
--   **Flexibilidade**: Trabalhe nos seus próprios projetos, em qualquer diretório, e o assistente sempre terá o conhecimento do Café com Godot para ajudar.
--   **Atualizações Contínuas**: Quando o repositório do curso é atualizado, o Café Gemini baixa a nova versão, garantindo que a IA esteja sempre aprendendo com o conteúdo mais recente.
+- **Profissionalismo**: Você instala uma ferramenta real, não apenas executa um script em uma pasta.
+- **Flexibilidade**: Trabalhe nos seus próprios projetos, em qualquer diretório, e o assistente sempre terá o conhecimento do Repo Café para ajudar.
+- **Atualizações Contínuas**: Quando o repositório do curso é atualizado, o Café Gemini baixa a nova versão, garantindo que a IA esteja sempre aprendendo com o conteúdo mais recente.
 
 ## Recursos Adicionais
 
--   **Análise de Mídia**: O Gemini pode "ver" e analisar arquivos de imagem e áudio do seu projeto.
--   **Geração de Imagens**: É possível configurar um *Model-Centric Pipeline (MCP)* para permitir que o Café Gemini gere imagens diretamente pela linha de comando. As instruções estão disponíveis no [repositório oficial do Gemini CLI](https://github.com/google/gemini-cli).
+- **Análise de Mídia**: O Gemini pode "ver" e analisar arquivos de imagem e áudio do seu projeto.
+- **Geração de Imagens**: É possível configurar um _Model-Centric Pipeline (MCP)_ para permitir que o Café Gemini gere imagens diretamente pela linha de comando. As instruções estão disponíveis no [repositório oficial do Gemini CLI](https://github.com/google/gemini-cli).
 
 ## Instalação
 
