@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-
-const { spawn } = require('child_process');
+const { execSync } = require('child_process');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
@@ -8,46 +7,45 @@ const fs = require('fs');
 // O diretório onde o contexto (o repositório) é clonado.
 const contextDir = path.join(os.homedir(), '.cafe-gemini');
 
+/**
+ * Função principal que executa o Gemini.
+ */
 function main() {
-    // Verifica se o diretório de contexto foi criado pela instalação.
+    // A verificação do diretório de contexto é necessária para todos os comandos.
     if (!fs.existsSync(contextDir)) {
         console.error('ERRO: Diretório de contexto não encontrado!');
         console.error(`O diretório esperado em "${contextDir}" não existe.`);
         console.error('Por favor, tente reinstalar o pacote para que o download seja feito corretamente:');
-        console.error('npm install -g @cafe-gamedev/gemini-v2');
+        console.error('npm install -g @cafe-gamedev/gemini');
         process.exit(1);
     }
 
-    // Pega todos os argumentos passados para o 'cafe-gemini-v2'
     const userArgs = process.argv.slice(2);
+    runGemini(userArgs);
+}
 
-    // Monta a lista de argumentos final para o comando 'gemini'
+/**
+ * Executa o Gemini CLI com o contexto injetado.
+ * @param {string[]} userArgs - Argumentos para passar ao Gemini.
+ */
+function runGemini(userArgs) {
     const finalArgs = [
+        'gemini',
         '--include-directories',
-        contextDir,
+        `"${contextDir}"`,
         '--load-memory-from-include-directories',
         ...userArgs
-    ];
+    ].join(' ');
 
     console.log(`☕ Executando Gemini com o contexto de "${contextDir}"...`);
     console.log('----------------------------------------------------------------');
 
-    // Executa o comando 'gemini' real com os argumentos injetados.
-    const geminiProcess = spawn('gemini', finalArgs, {
-        stdio: 'inherit', // Redireciona input/output para o terminal atual
-        shell: true       // Necessário no Windows para encontrar o .cmd do gemini
-    });
-
-    geminiProcess.on('close', (code) => {
-        process.exit(code);
-    });
-
-    geminiProcess.on('error', (err) => {
-        console.error('ERRO: Falha ao iniciar o processo do Gemini.');
-        console.error('Verifique se o @google/gemini-cli está instalado e acessível no seu PATH.');
-        console.error(err);
+    try {
+        execSync(finalArgs, { stdio: 'inherit', shell: true });
+    } catch (error) {
+        // O erro já será impresso no console por causa do stdio: 'inherit'
         process.exit(1);
-    });
+    }
 }
 
 main();
