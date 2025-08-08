@@ -6,7 +6,7 @@ const AdmZip = require('adm-zip');
 
 // --- Configuração ---
 const repoOwner = 'Cafe-GameDev';
-const repoName = 'Repo-Cafe'; // <-- Corrigido
+const repoName = 'Repo-Cafe';
 const repoUrl = `https://github.com/${repoOwner}/${repoName}/archive/refs/heads/main.zip`;
 const contextDir = path.join(os.homedir(), '.cafe-gemini');
 const zipPath = path.join(contextDir, 'context.zip');
