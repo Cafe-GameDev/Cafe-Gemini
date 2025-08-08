@@ -6,7 +6,7 @@ const AdmZip = require('adm-zip');
 
 // --- Configuração ---
 const repoOwner = 'Cafe-GameDev';
-const repoName = 'Cafe-com-Godot';
+const repoName = 'Repo-Cafe'; // <-- Corrigido
 const repoUrl = `https://github.com/${repoOwner}/${repoName}/archive/refs/heads/main.zip`;
 const contextDir = path.join(os.homedir(), '.cafe-gemini');
 const zipPath = path.join(contextDir, 'context.zip');
@@ -76,9 +76,9 @@ async function run() {
     }
 
     if (newCommitHash !== 'N/A' && oldCommitHash !== newCommitHash) {
-        console.log(`-> Atualizando manuais (Café com Godot): ${oldCommitHash.substring(0, 7)} -> ${newCommitHash.substring(0, 7)}`);
+        console.log(`-> Atualizando manuais (Repo-Cafe): ${oldCommitHash.substring(0, 7)} -> ${newCommitHash.substring(0, 7)}`);
     } else {
-        console.log('-> Verificando manuais (Café com Godot)... Já estão na versão mais recente ou não foi possível verificar.');
+        console.log('-> Verificando manuais (Repo-Cafe)... Já estão na versão mais recente ou não foi possível verificar.');
     }
 
     // 1. Limpar diretório antigo, se existir, e criar um novo
@@ -100,7 +100,7 @@ ERRO: Falha ao baixar o conteúdo do repositório.`, e);
     try {
         const zip = new AdmZip(zipPath);
         zip.extractAllTo(contextDir, true);
-        const extractedFolderName = fs.readdirSync(contextDir).find(f => f.startsWith('Cafe-com-Godot-'));
+        const extractedFolderName = fs.readdirSync(contextDir).find(f => f.startsWith('Repo-Cafe-')); // <-- Corrigido
         if (extractedFolderName) {
             const extractedPath = path.join(contextDir, extractedFolderName);
             fs.readdirSync(extractedPath).forEach(file => {
