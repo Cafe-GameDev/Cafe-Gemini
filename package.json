@@ -1,12 +1,14 @@
 {
   "name": "@cafe-gamedev/gemini",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Instalador e wrapper para o Gemini, configurado com o contexto do ecossistema 'Repo Café.",
   "main": "main.js",
   "bin": {
     "cafe-gemini": "main.js",
+    "repo-cafe": "main.js",
     "cafe-gemini-update": "update.js",
-    "cafe-new": "new.js"
+    "cafe-new": "new.js",
+    "repo-update": "postinstall.js"
   },
   "publishConfig": {
     "access": "public"
@@ -38,5 +40,10 @@
   "bundledDependencies": [
     "@google/gemini-cli",
     "adm-zip"
+  ],
+  "bundleDependencies": [
+    "@google/gemini-cli",
+    "adm-zip"
   ]
 }
+
