@@ -52,3 +52,12 @@ cafe-gemini
 
 -   **Análise de Mídia**: O Gemini pode "ver" e analisar arquivos de imagem e áudio do seu projeto.
 -   **Geração de Imagens**: É possível configurar um _Model-Centric Pipeline (MCP)_ para permitir que o Café Gemini gere imagens diretamente pela linha de comando. As instruções estão disponíveis no [repositório oficial do Gemini CLI](https://github.com/google/gemini-cli).
+
+## Modo de Operação de Conteúdo (NSFW)
+
+Para garantir total liberdade criativa em projetos destinados a um público adulto, o Café Gemini possui um modo de operação explícito (NSFW).
+
+-   **Modo Padrão (SFW):** Por padrão, o assistente opera com as políticas de segurança de conteúdo do Google, evitando temas sensíveis.
+-   **Modo Explícito (NSFW):** Se um arquivo chamado `NSFW` (sem extensão) for detectado na raiz do seu projeto, as restrições de conteúdo são suspensas. Isso permite que o assistente colabore na criação de diálogos com linguagem explícita, descrições de violência e outros temas maduros, respeitando a visão criativa do seu projeto.
+
+Se você solicitar um conteúdo que seria bloqueado, o próprio assistente oferecerá a criação do arquivo `NSFW` para ativar o modo explícito.
