@@ -14,7 +14,7 @@ function main() {
         console.error('ERRO: Diretório de contexto não encontrado!');
         console.error(`O diretório esperado em "${contextDir}" não existe.`);
         console.error('Por favor, tente reinstalar o pacote para que o download seja feito corretamente:');
-        console.error('npm install -g @cafe-gamedev/gemini');
+        console.error('npm install -g cafe-gemini');
         process.exit(1);
     }
 

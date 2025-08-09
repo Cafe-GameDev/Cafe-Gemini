@@ -79,7 +79,7 @@ async function run() {
     if (newCommitHash !== 'N/A' && oldCommitHash !== newCommitHash) {
         console.log(`-> Atualizando manuais (Repo-Cafe): ${oldCommitHash.substring(0, 7)} -> ${newCommitHash.substring(0, 7)}`);
     } else {
-        console.log('-> Verificando manuais (Repo-Cafe)... Já estão na versão mais recente ou não foi possível verificar.');
+        console.log('-> Repo-Cafe Está Atualizado');
     }
 
     // 1. Limpar diretório antigo, se existir, e criar um novo
