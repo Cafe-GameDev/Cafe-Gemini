@@ -1,6 +1,6 @@
 {
-  "name": "@cafe-gamedev/gemini",
-  "version": "1.2.4",
+  "name": "cafe-gemini",
+  "version": "0.0.1",
   "description": "Instalador e wrapper para o Gemini, configurado com o contexto do ecossistema 'Repo Café.",
   "main": "main.js",
   "bin": {
