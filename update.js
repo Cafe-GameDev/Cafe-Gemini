@@ -15,6 +15,7 @@ async function checkForUpdates() {
 
         if (currentVersion !== latestVersion) {
             console.log(`-> Atualizando Cafe-Gemini: v${currentVersion} -> v${latestVersion}`);
+            execSync('npm install -g @google/gemini-cli@latest', { stdio: 'inherit' });
             execSync('npm install -g cafe-gemini@latest', { stdio: 'inherit' });
             console.log('\n✅ cafe-gemini atualizado com sucesso!');
         } else {

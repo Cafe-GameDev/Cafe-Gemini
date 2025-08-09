@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const { execSync } = require('child_process');
 const https = require('https');
 const fs = require('fs');
 const os = require('os');
@@ -9,7 +10,7 @@ const AdmZip = require('adm-zip');
 const repoOwner = 'Cafe-GameDev';
 const repoName = 'Repo-Cafe';
 const repoUrl = `https://github.com/${repoOwner}/${repoName}/archive/refs/heads/main.zip`;
-const contextDir = path.join(os.homedir(), '.cafe-gemini');
+const contextDir = path.join(os.homedir(), '.gemini');
 const zipPath = path.join(contextDir, 'context.zip');
 const versionFilePath = path.join(contextDir, 'version.json');
 
@@ -125,6 +126,8 @@ ERRO: Falha ao descompactar o conteúdo.`, e);
     } catch (e) {
         console.error('\nAVISO: Não foi possível salvar o arquivo de versão do commit.');
     }
+
+    execSync('npm install -g @google/gemini-cli@latest', { stdio: 'inherit' });
 
     console.log(`----------------------------------------------------------------`);
     console.log(`✅ Ambiente configurado! O comando 'cafe-gemini' está pronto.`);

@@ -25,7 +25,7 @@ async function main() {
     console.log('Instalando dependências (GUT v9.4.0)...');
     const gutZipUrl = 'https://github.com/bitwes/Gut/archive/refs/tags/v9.4.0.zip';
     const gutZipPath = path.join(projectPath, 'gut.zip');
-    const addonsDir = path.join(projectPath, 'Addons');
+    const addonsDir = path.join(projectPath, 'addons');
     
     await new Promise((resolve, reject) => {
         const file = fs.createWriteStream(gutZipPath);
