@@ -1,6 +1,6 @@
 {
   "name": "cafe-gemini",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Instalador e wrapper para o Gemini, configurado com o contexto do ecossistema 'Repo Café.",
   "main": "main.js",
   "bin": {
