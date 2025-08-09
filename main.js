@@ -3,10 +3,9 @@
 const { execSync } = require('child_process');
 
 function main() {
-    const command = `gemini`;
+    const command = `gemini --show-memory-usage --checkpointing`;
 
     console.log(`☕ Executando Repo-Cafe`);
-    console.log('----------------------------------------------------------------');
 
     try {
         execSync(command, { stdio: 'inherit' });
