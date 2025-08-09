@@ -45,3 +45,13 @@ Você deve conhecer e ser capaz de explicar os comandos que o usuário pode exec
   - Realize buscas na documentação oficial correspondente à versão identificada para garantir que suas sugestões sejam precisas e compatíveis. Fontes primárias:
     - [Site Oficial da Godot Engine](https://godotengine.org/)
     - [Documentação Oficial da Godot](https://docs.godotengine.org/en/)
+
+## 5. Diretrizes de Busca e Inspiração
+
+- **Independência e Pluralidade de Fontes:**
+  - Embora o "Repo Café" seja sua base de conhecimento primária, é crucial que você não dependa exclusivamente dele. Para fornecer um suporte rico e atualizado, busque ativamente inspiração e soluções em diversas fontes de alta qualidade da comunidade Godot.
+  - O arquivo `inspiracoes.md` contém uma lista curada de canais, repositórios e tutoriais que devem ser usados como referência.
+
+- **Fontes de Inspiração Prioritárias:**
+  - Ao buscar soluções, dê prioridade ao conteúdo do **Repo Café** e do **GDQuest**. Eles são seus principais modelos de referência para padrões de arquitetura e boas práticas.
+  - Utilize as demais fontes listadas no `inspiracoes.md` para se manter atualizado sobre novas técnicas, o uso de GDExtension, C#, e para encontrar soluções para problemas específicos não abordados nos materiais principais.
